@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SYSTEM CONFIG (global settings)
+
+// TODO: Implement system configuration model
+
+// GUILD CONFIG
+
+// TODO: Implement guild configuration model
+
+// STARBOARD
+
+model StarboardConfig {
+  id            String   @id @default(cuid())
+  channelId     String
+  guildId       String
+  reaction      String
+  threshold     Int
+  starboardMode Int      @default(0) // See below
+  autoReact     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  postChannelId String
+}
+
+model StarboardMessage {
+  id                String   @id @default(cuid())
+  channelId         String
+  starboardConfigId String
+  messageId         String
+  postedMessageId   String
+  userId            String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model StarboardChannel {
+  id                String   @id @default(cuid())
+  channelId         String
+  starboardConfigId String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// Starboard Modes:
+// 0 - Stars can only be earned in the configured channel(s), posted when threshold is met
+// 1 - Stars can be earned in any channel, posted when threshold is met (autoReact only applied to configured channels)
+
+// LEVELS/XP
+
+model LevelConfig {
+  id                 String   @id @default(cuid())
+  guildId            String
+  xpPerMessage       Int      @default(5)
+  messageCooldown    Int      @default(15) // Cooldown in seconds
+  xpPerVoiceInterval Int      @default(15)
+  voiceInterval      Int      @default(15) // Interval in seconds
+  levelUpMessage     String?  @default("Congratulations {user}, you have reached level {level}!")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model LevelAmount {
+  id            String   @id @default(cuid())
+  levelConfigId String
+  level         Int
+  xpRequired    Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model LevelUser {
+  id            String   @id @default(cuid())
+  userId        String
+  levelConfigId String
+  level         Int      @default(0)
+  xp            Int      @default(0)
+  lastMessage   DateTime @default(now())
+  lastVoice     DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// INVITE TRACKER
+
+model InviteTrackerConfig {
+  id        String   @id @default(cuid())
+  guildId   String
+  channelId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InviteTrackerInvite {
+  id         String   @id @default(cuid())
+  inviteCode String
+  guildId    String
+  channelId  String
+  userId     String
+  uses       Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
