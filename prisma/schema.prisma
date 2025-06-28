@@ -20,6 +20,7 @@ datasource db {
 
 model StarboardConfig {
   id            String   @id @default(cuid())
+  enabled       Boolean  @default(false)
   channelId     String
   guildId       String
   reaction      String
@@ -50,6 +51,7 @@ model StarboardMessage {
 
 model LevelConfig {
   id                 String   @id @default(cuid())
+  enabled            Boolean  @default(false)
   guildId            String
   xpPerMessage       Int      @default(5)
   messageCooldown    Int      @default(15) // Cooldown in seconds
@@ -85,6 +87,7 @@ model LevelUser {
 
 model InviteTrackerConfig {
   id        String   @id @default(cuid())
+  enabled   Boolean  @default(false)
   guildId   String
   channelId String
   createdAt DateTime @default(now())
