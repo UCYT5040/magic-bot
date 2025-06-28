@@ -88,7 +88,6 @@ model LevelUser {
 model InviteTrackerConfig {
   id        String   @id @default(cuid())
   guildId   String
-  channelId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
