@@ -1,4 +1,4 @@
-import {Events, MessageReaction, TextChannel} from "discord.js";
+import {Events, MessageFlags, MessageReaction, TextChannel} from "discord.js";
 import {PrismaClient} from "../../../generated/prisma";
 import {embed} from "../../embed";
 
@@ -39,7 +39,8 @@ module.exports = {
                             reaction.client.channels.fetch(config.postChannelId).then(channel => {
                                 let starboardMessageEmbed = createStarboardEmbed(reaction, starCount);
                                 (channel as TextChannel).send({
-                                    embeds: [starboardMessageEmbed]
+                                    embeds: [starboardMessageEmbed],
+                                    flags: MessageFlags.SuppressEmbeds
                                 }).then(newMessage => {
                                     // Save the new starboard message to the database
                                     prisma.starboardMessage.create({
