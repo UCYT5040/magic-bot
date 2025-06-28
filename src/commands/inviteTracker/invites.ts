@@ -21,8 +21,6 @@ module.exports = {
         const guildInvites = await guildInvitesPromise;
         if (!guildInvites || guildInvites.length === 0) {
             const user = interaction.options.getUser("user") || interaction.user;
-            const userInviteCount = guildInvites.find(([userId]) => userId === user.id)?.[1] || 0;
-            const userRank = guildInvites.findIndex(([userId]) => userId === user.id) + 1 || "Unranked";
             await interaction.editReply({
                 embeds: [noDataEmbed.setDescription(`No invites found for <@${user.id}> in this server.`)],
                 flags: MessageFlags.SuppressEmbeds
@@ -30,7 +28,7 @@ module.exports = {
         } else {
             const user = interaction.options.getUser("user") || interaction.user;
             const userInviteCount = guildInvites.find(([userId]) => userId === user.id)?.[1] || 0;
-            const userRank = guildInvites.findIndex(([userId]) => userId === user.id) + 1 || "N/A";
+            const userRank = guildInvites.findIndex(([userId]) => userId === user.id) + 1 || "Unranked";
             const inviteEmbed = embed()
                 .setTitle(`Invites for ${user.username}`)
                 .setDescription(`**Total Invites:** ${userInviteCount}\n**Rank:** ${userRank}`);
