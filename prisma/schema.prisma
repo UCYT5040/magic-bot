@@ -42,14 +42,6 @@ model StarboardMessage {
   updatedAt         DateTime @updatedAt
 }
 
-model StarboardChannel {
-  id                String   @id @default(cuid())
-  channelId         String
-  starboardConfigId String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-}
-
 // Starboard Modes:
 // 0 - Stars can only be earned in the configured channel(s), posted when threshold is met
 // 1 - Stars can be earned in any channel, posted when threshold is met (autoReact only applied to configured channels)
