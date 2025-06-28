@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from "discord.js";
+import {MessageFlagsBitField, PermissionsBitField, SlashCommandBuilder} from "discord.js";
 import {ConfigSession} from "../../config";
 import {loadStarboardConfig, saveStarboardConfig, starboardConfigParts} from "../../configs/starboard";
 
@@ -24,18 +24,22 @@ module.exports = {
                         value: key
                     }))
                 )
-        ),
+        )
+        .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
 
     async execute(interaction) {
         const configKey = interaction.options.getString("config");
         const configEntry = configs[configKey];
         if (!configEntry) {
-            await interaction.reply({ content: "Unknown configuration.", ephemeral: true });
+            await interaction.reply({content: "Unknown configuration.", flags: [MessageFlagsBitField.Flags.Ephemeral]});
             return;
         }
         const [label, sessionBuilder] = configEntry;
         if (typeof sessionBuilder !== "function") {
-            await interaction.reply({ content: "Configuration not implemented yet.", ephemeral: true });
+            await interaction.reply({
+                content: "Configuration not implemented yet.",
+                flags: [MessageFlagsBitField.Flags.Ephemeral]
+            });
             return;
         }
         const session = (sessionBuilder as (guildId: string) => ConfigSession)(interaction.guildId);
