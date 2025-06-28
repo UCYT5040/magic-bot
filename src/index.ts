@@ -6,7 +6,10 @@ interface ClientWithCommands extends Client {
     commands: Collection<string, any>;
 }
 
-const client = new Client({intents: [GatewayIntentBits.Guilds]}) as ClientWithCommands;
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.MessageContent]
+}) as ClientWithCommands;
 
 client.commands = new Collection();
 
@@ -28,6 +31,25 @@ for (const folder of commandFolders) {
         }
     }
 }
+
+const eventsPath = path.join(__dirname, "events");
+const eventFolders = fs.readdirSync(eventsPath);
+
+for (const folder of eventFolders) {
+    const eventPath = path.join(eventsPath, folder);
+    const eventFiles = fs.readdirSync(eventPath).filter(file => file.endsWith(".ts"));
+    for (const file of eventFiles) {
+        console.log(file);
+        const filePath = path.join(eventPath, file);
+        const event = require(filePath);
+        if (event.once) {
+            client.once(event.name, (...args: any[]) => event.execute(...args, client));
+        } else {
+            client.on(event.name, (...args: any[]) => event.execute(...args, client));
+        }
+    }
+}
+
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
