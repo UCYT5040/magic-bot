@@ -14,7 +14,11 @@ datasource db {
 
 // GUILD CONFIG
 
-// TODO: Implement guild configuration model
+model GuildConfig {
+  id      String @id @default(cuid())
+  guildId String @unique
+  color   String @default("#ff0040") // Used for embeds
+}
 
 // STARBOARD
 
