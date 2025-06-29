@@ -6,7 +6,7 @@ import {
     TextInputBuilder,
     TextInputStyle
 } from "discord.js";
-import {embed} from "../../embed";
+import { embed } from "../../embed";
 import { PrismaClient } from "../../../generated/prisma/client";
 
 const prisma = new PrismaClient();
@@ -85,7 +85,7 @@ module.exports = {
             ]);
         await interaction.showModal(embedDetailsModal);
         const filter = (i) => i.customId.startsWith(`embedDetails-${randomId}`) && i.user.id === interaction.user.id;
-        const modalInteraction = await interaction.awaitModalSubmit({filter, time: 60000});
+        const modalInteraction = await interaction.awaitModalSubmit({ filter, time: 60000 });
         const embedTitle = modalInteraction.fields.getTextInputValue(`embedTitle-${randomId}`);
         const embedDescription = modalInteraction.fields.getTextInputValue(`embedDescription-${randomId}`);
         const embedColor = modalInteraction.fields.getTextInputValue(`embedColor-${randomId}`);
@@ -108,15 +108,15 @@ module.exports = {
             });
             // Wait for button interaction
             const buttonFilter = (btnInt) => btnInt.customId === nextButtonId && btnInt.user.id === interaction.user.id;
-            const buttonInteraction = await latestInteraction.channel.awaitMessageComponent({filter: buttonFilter, time: 60000});
+            const buttonInteraction = await latestInteraction.channel.awaitMessageComponent({ filter: buttonFilter, time: 60000 });
             // Show the next modal using the button interaction
             const [fieldId, fieldModal] = createFieldModal(i);
             await buttonInteraction.showModal(fieldModal);
             const fieldFilter = (i) => i.customId.startsWith(`embedFieldDetails-${fieldId}`) && i.user.id === interaction.user.id;
-            const fieldInteraction = await buttonInteraction.awaitModalSubmit({filter: fieldFilter, time: 60000});
+            const fieldInteraction = await buttonInteraction.awaitModalSubmit({ filter: fieldFilter, time: 60000 });
             const fieldName = fieldInteraction.fields.getTextInputValue(`embedFieldName-${fieldId}`);
             const fieldValue = fieldInteraction.fields.getTextInputValue(`embedFieldValue-${fieldId}`);
-            embedFields.push({name: fieldName, value: fieldValue});
+            embedFields.push({ name: fieldName, value: fieldValue });
             latestInteraction = fieldInteraction;
         }
         const embedColorHex = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(embedColor) ? embedColor : color;
@@ -129,4 +129,4 @@ module.exports = {
             embeds: [embedMessage]
         });
     }
-};
+}
