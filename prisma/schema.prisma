@@ -106,3 +106,24 @@ model InviteTrackerInvite {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// EMBED UTILITY CONFIG
+
+model EmbedUtilityConfig {
+  id        String   @id @default(cuid())
+  guildId   String   @unique
+  enabled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// AI IMAGE GENERATION
+
+model AiImageGenerationConfig {
+  id        String   @id @default(cuid())
+  guildId   String   @unique
+  enabled   Boolean  @default(false)
+  // TODO: Implement custom AI Horde API key
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
