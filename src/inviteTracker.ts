@@ -1,5 +1,5 @@
 let inviteCache = new Map<string, Map<string, number>>(); // guild id -> user id -> invite count
-let queue = [];
+let queue: number[] = [];
 let processing = false;
 
 function wait(ms: number): Promise<void> {
