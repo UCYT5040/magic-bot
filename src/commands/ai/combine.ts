@@ -126,7 +126,7 @@ module.exports = {
                     embeds: [
                         (await embed(interaction.guildId))
                             .setTitle("Generating...")
-                            .setDescription(`Mixing ${item1} and ${item2}...\n**Queue position:** ${jobData.queue_position}\n**ETA:** ${jobData.wait_time} seconds`)
+                            .setDescription(`Mixing **${item1}** and **${item2}**...\n**Queue position:** ${jobData.queue_position}\n**ETA:** ${jobData.wait_time} seconds`)
                     ]
                 });
             }
