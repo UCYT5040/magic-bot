@@ -4,7 +4,8 @@
   "description": "Magic Bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsx src/index.ts",
+    "deploy-commands": "tsx src/deploy-commands.ts"
   },
   "author": "Jeremiah Saunders",
   "license": "UNLICENSED",
