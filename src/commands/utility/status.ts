@@ -22,7 +22,7 @@ module.exports = {
             const [label, unit] = value;
             messageBody += `**${label}:** ${data[key]} ${unit}\n`;
         }
-        const statusEmbed = embed().setTitle('Status Information').setDescription(messageBody);
+        const statusEmbed = (await embed(interaction.guildId)).setTitle('Status Information').setDescription(messageBody);
         await interaction.reply({
             embeds: [statusEmbed]
         });

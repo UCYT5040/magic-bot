@@ -5,11 +5,11 @@ const prisma = new PrismaClient();
 
 const DEFAULT_COLOR = "#ff0040"; // Default embed color
 
-export function embed(guildId?: string): EmbedBuilder {
+export async function embed(guildId?: string): Promise<EmbedBuilder> {
     // Fetch guild configuration if available
     let color: string | undefined;
     if (guildId) {
-        prisma.guildConfig.findUnique({ where: { guildId } })
+        await prisma.guildConfig.findUnique({ where: { guildId } })
             .then(config => {
                 if (config && config.color) {
                     color = config.color;

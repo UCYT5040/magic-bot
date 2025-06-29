@@ -19,7 +19,12 @@ module.exports = {
         const guildInvites = await guildInvitesPromise;
         if (!guildInvites || guildInvites.length === 0) {
             await interaction.editReply({
-                embeds: [noDataEmbed]
+                embeds: [
+                    await embed(interaction.guildId)
+                        .setTitle("No Invites Found")
+                        .setDescription(`No invites found for this server.
+If this is unexpected, data may still be processing.`)
+                ]
             });
         } else {
             let list = "";

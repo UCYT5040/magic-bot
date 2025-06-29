@@ -103,7 +103,7 @@ module.exports = {
             latestInteraction = fieldInteraction;
         }
         const embedColorHex = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(embedColor) ? embedColor : "#FFFFFF"; // Default to white if invalid
-        const embedMessage = embed()
+        const embedMessage = await embed(interaction.guildId)
             .setTitle(embedTitle || "No Title")
             .setDescription(embedDescription || "No Description")
             .setColor(embedColorHex)
