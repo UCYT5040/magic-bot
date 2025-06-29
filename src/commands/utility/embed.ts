@@ -7,6 +7,9 @@ import {
     TextInputStyle
 } from "discord.js";
 import {embed} from "../../embed";
+import { PrismaClient } from "../../../generated/prisma/client";
+
+const prisma = new PrismaClient();
 
 function createFieldModal(i: number) {
     const randomId = Math.random().toString(36).substring(2, 15); // Generate a random ID for the modal
@@ -43,6 +46,18 @@ module.exports = {
     async execute(interaction) {
         const fieldsCount = interaction.options.getNumber("fields") || 0;
         const randomId = Math.random().toString(36).substring(2, 15);
+        // Get guild config to see if a color is set
+        const guildConfig = await prisma.guildConfig.findUnique({
+            where: {
+                guildId: interaction.guildId
+            }
+        });
+        let color;
+        if (!guildConfig || !guildConfig.color) {
+            color = "#ff0040"; // Default color if not set
+        } else {
+            color = guildConfig.color;
+        }
         const embedDetailsModal = new ModalBuilder()
             .setTitle("Embed Details")
             .setCustomId(`embedDetails-${randomId}`)
@@ -62,8 +77,10 @@ module.exports = {
                 new ActionRowBuilder().addComponents(
                     new TextInputBuilder()
                         .setCustomId(`embedColor-${randomId}`)
-                        .setLabel("Embed Color (hex code, e.g. #FF0040)")
+                        .setLabel("Embed Color")
                         .setStyle(TextInputStyle.Short)
+                        .setValue(color)
+                        .setPlaceholder(`Hex color code (e.g., ${color})`)
                 )
             ]);
         await interaction.showModal(embedDetailsModal);
@@ -102,8 +119,8 @@ module.exports = {
             embedFields.push({name: fieldName, value: fieldValue});
             latestInteraction = fieldInteraction;
         }
-        const embedColorHex = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(embedColor) ? embedColor : "#FFFFFF"; // Default to white if invalid
-        const embedMessage = await embed(interaction.guildId)
+        const embedColorHex = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(embedColor) ? embedColor : color;
+        const embedMessage = (await embed(interaction.guildId))
             .setTitle(embedTitle || "No Title")
             .setDescription(embedDescription || "No Description")
             .setColor(embedColorHex)
