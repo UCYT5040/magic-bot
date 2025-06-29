@@ -118,7 +118,7 @@ module.exports = {
 
         await interaction.editReply({
             embeds: [
-                await embed(interaction.guildId)
+                (await embed(interaction.guildId))
                     .setTitle("Generating Image")
                     .setDescription("Your image is being generated.\nI'll keep you updated.")
             ]
@@ -161,7 +161,7 @@ module.exports = {
                 const imageUrl = jobData.generations[0].img;
                 return await interaction.editReply({
                     embeds: [
-                        await embed(interaction.guildId)
+                        (await embed(interaction.guildId))
                             .setTitle("Image Generated")
                             .setDescription(`Your image has been generated successfully!`)
                             .setImage(imageUrl)
@@ -174,7 +174,7 @@ module.exports = {
                 // Update the reply with the current status
                 await interaction.editReply({
                     embeds: [
-                        await embed(interaction.guildId)
+                        (await embed(interaction.guildId))
                             .setTitle("Generating Image")
                             .setDescription(`Your image is being generated.\n**Queue position:** ${jobData.queue_position}\n**ETA:** ${jobData.wait_time} seconds`)
                     ]
