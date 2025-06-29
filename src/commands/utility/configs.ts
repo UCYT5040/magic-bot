@@ -1,8 +1,14 @@
 import {MessageFlagsBitField, PermissionsBitField, SlashCommandBuilder} from "discord.js";
 import {ConfigSession} from "../../config";
 import {loadStarboardConfig, saveStarboardConfig, starboardConfigParts} from "../../configs/starboard";
+import { loadGuildConfig, saveGuildConfig, guildConfigParts } from "../../configs/guild";
 
 const configs = {
+    "guild": ["Guild", (guildId: string) => {
+        const session = new ConfigSession("Guild Configuration", guildId, loadGuildConfig, saveGuildConfig);
+        session.parts = [...session.parts, ...guildConfigParts];
+        return session;
+    }],
     "starboard": ["Starboard", (guildId: string) => {
         const session = new ConfigSession("Starboard Configuration", guildId, loadStarboardConfig, saveStarboardConfig);
         session.parts = [...starboardConfigParts];
