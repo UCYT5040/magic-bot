@@ -2,10 +2,6 @@ import {MessageFlags, SlashCommandBuilder} from "discord.js";
 import {embed} from "../../embed";
 import {getGuildInvites} from "../../inviteTracker";
 
-const noDataEmbed = embed()
-    .setTitle("No Invites Found")
-    .setDescription(`No invites found for this server.
-If this is unexpected, data may still be processing.`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("invite_leaderboard")
@@ -33,7 +29,7 @@ If this is unexpected, data may still be processing.`)
                 const [userId, inviteCount] = guildInvites[i];
                 list += `**${i + 1}.** <@${userId}> - ${inviteCount} invites\n`;
             }
-            const leaderboardEmbed = embed()
+            const leaderboardEmbed = (await embed(interaction.guildId))
                 .setTitle("Invite Leaderboard")
                 .setDescription("Top invite counts for users in this server:\n" + list.trim());
             await interaction.editReply({
