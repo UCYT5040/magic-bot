@@ -19,6 +19,13 @@ for (const folder of commandFolders) {
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
         const command = require(filePath);
+        if ("requireEnv" in command && command.requireEnv) {
+            const value = process.env[command.requireEnv];
+            if (value !== 'true') {
+                continue;
+            }
+        
+        }
         if ("data" in command && "execute" in command) {
             commands.push(command.data.toJSON());
         } else {
