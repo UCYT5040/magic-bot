@@ -19,7 +19,7 @@ module.exports = {
             const user = interaction.options.getUser("user") || interaction.user;
             await interaction.editReply({
                 embeds: [
-                    await embed(interaction.guildId)
+                    (await embed(interaction.guildId))
                     .setTitle(`No Invites Found for ${user.username}`)
                     .setDescription(`No invites found for the specified user or the server.
 If this is unexpected, data may still be processing.`)
@@ -30,7 +30,7 @@ If this is unexpected, data may still be processing.`)
             const user = interaction.options.getUser("user") || interaction.user;
             const userInviteCount = guildInvites.find(([userId]) => userId === user.id)?.[1] || 0;
             const userRank = guildInvites.findIndex(([userId]) => userId === user.id) + 1 || "Unranked";
-            const inviteEmbed = await embed(interaction.guildId)
+            const inviteEmbed = (await embed(interaction.guildId))
                 .setTitle(`Invites for ${user.username}`)
                 .setDescription(`**Total Invites:** ${userInviteCount}\n**Rank:** ${userRank}`);
             await interaction.editReply({

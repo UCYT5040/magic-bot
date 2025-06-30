@@ -16,7 +16,7 @@ module.exports = {
         if (!guildInvites || guildInvites.length === 0) {
             await interaction.editReply({
                 embeds: [
-                    await embed(interaction.guildId)
+                    (await embed(interaction.guildId))
                         .setTitle("No Invites Found")
                         .setDescription(`No invites found for this server.
 If this is unexpected, data may still be processing.`)
