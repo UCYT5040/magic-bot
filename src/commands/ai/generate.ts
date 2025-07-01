@@ -163,7 +163,7 @@ module.exports = {
                     embeds: [
                         (await embed(interaction.guildId))
                             .setTitle("Image Generated")
-                            .setDescription(`Your image has been generated successfully!`)
+                            .setDescription(`Your image has been generated successfully!\n[Open Image](${imageUrl})`)
                             .setImage(imageUrl)
                             .setFooter({
                                 text: `Model: ${jobData.generations[0].model}`
