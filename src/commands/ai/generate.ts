@@ -56,7 +56,7 @@ module.exports = {
         .addStringOption(option =>
             option.setName("model")
                 .setDescription("The AI model to use for image generation")
-                .setRequired(false)
+                .setRequired(true)
                 .setAutocomplete(true)
         ),
     async autocomplete(interaction) {
@@ -78,7 +78,7 @@ module.exports = {
     },
     async execute(interaction) {
         const prompt = interaction.options.getString("prompt", true);
-        const model = interaction.options.getString("model") || "stable_diffusion_2.1";
+        const model = interaction.options.getString("model");
 
         await interaction.deferReply();
 
