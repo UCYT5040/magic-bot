@@ -2,6 +2,7 @@ import {MessageFlagsBitField, PermissionsBitField, SlashCommandBuilder} from "di
 import {ConfigSession} from "../../config";
 import {loadStarboardConfig, saveStarboardConfig, starboardConfigParts} from "../../configs/starboard";
 import { loadGuildConfig, saveGuildConfig, guildConfigParts } from "../../configs/guild";
+import {levelConfigParts, loadLevelConfig, saveLevelConfig} from "../../configs/level";
 
 const configs = {
     "guild": ["Guild", (guildId: string) => {
@@ -12,6 +13,11 @@ const configs = {
     "starboard": ["Starboard", (guildId: string) => {
         const session = new ConfigSession("Starboard Configuration", guildId, loadStarboardConfig, saveStarboardConfig);
         session.parts = [...starboardConfigParts];
+        return session;
+    }],
+    "level": ["Levels & XP", (guildId: string) => {
+        const session = new ConfigSession("Level Configuration", guildId, loadLevelConfig, saveLevelConfig);
+        session.parts = [...levelConfigParts];
         return session;
     }]
 };

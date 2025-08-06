@@ -1,9 +1,22 @@
 import {ConfigPart, InputConfigPart, SelectConfigPart} from "../config";
-import {PrismaClient} from "../../generated/prisma";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export const starboardConfigParts: ConfigPart[] = [
+    new SelectConfigPart(
+        "enabled",
+        "Enable or disable the starboard feature",
+        [
+            {label: "Enabled", value: "true"},
+            {label: "Disabled", value: "false"}
+        ],
+        "boolean",
+        1, // min selections
+        1, // max selections
+        undefined,
+        "true" // default value
+    ),
     new SelectConfigPart(
         "channelId",
         "Channel where messages can be starred",

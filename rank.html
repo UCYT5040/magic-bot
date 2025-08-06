@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank Card</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+            padding: 10px;
+            max-width: 600px;
+        }
+
+        .status-online {
+            background-color: #23a55a;
+        }
+
+        .status-idle {
+            background-color: #f0b232;
+        }
+
+        .status-dnd {
+            background-color: #f23f43;
+        }
+
+        .status-offline {
+            background-color: #80848e;
+        }
+    </style>
+</head>
+<body>
+<div class="card bg-zinc-800/50 rounded-2xl p-6 max-w-lg mx-auto text-white shadow-lg">
+    <div class="flex items-center space-x-4">
+        <div class="relative flex-shrink-0">
+            <img class="w-24 h-24 rounded-full border-4 border-zinc-700"
+                 src="{{avatarURL}}"
+                 alt="{{username}}'s avatar"
+                 onerror="this.onerror=null; this.src='https://placehold.co/96x96/7c3aed/ffffff?text={{username.[0]}}';">
+            {{#if statusClass}}
+            <div class="status {{statusClass}} absolute bottom-1 right-1 w-6 h-6 rounded-full border-4 border-zinc-800"></div>
+            {{/if}}
+        </div>
+        <div class="flex-grow">
+            <div class="flex justify-between items-baseline text-zinc-400 text-sm mb-1">
+                <span>RANK <b class="text-white font-black text-lg">#{{rank}}</b></span>
+                <span>LEVEL <b class="text-white font-black text-lg">{{level}}</b></span>
+            </div>
+            <div class="flex justify-between items-end">
+                <h2 class="text-3xl font-black text-white truncate" title="{{username}}">{{username}}</h2>
+                <p class="text-zinc-400 text-sm font-medium flex-shrink-0 ml-2">
+                    <span class="text-white">{{currentXP}}</span> / {{requiredXP}} XP
+                </p>
+            </div>
+            <div class="mt-2">
+                <div class="bg-zinc-700 rounded-full h-4 w-full overflow-hidden">
+                    <div class="bg-white rounded-full h-4" style="width: {{xpPercentage}}%;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

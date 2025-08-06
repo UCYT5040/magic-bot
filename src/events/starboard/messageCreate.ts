@@ -1,5 +1,5 @@
 import {Events, Message} from "discord.js";
-import {PrismaClient} from "../../../generated/prisma";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 

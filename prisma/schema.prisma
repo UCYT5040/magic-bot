@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -59,9 +58,8 @@ model LevelConfig {
   guildId            String
   xpPerMessage       Int      @default(5)
   messageCooldown    Int      @default(15) // Cooldown in seconds
-  xpPerVoiceInterval Int      @default(15)
+  xpPerVoiceInterval Int      @default(5)
   voiceInterval      Int      @default(15) // Interval in seconds
-  levelUpMessage     String?  @default("Congratulations {user}, you have reached level {level}!")
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
@@ -87,42 +85,12 @@ model LevelUser {
   updatedAt     DateTime @updatedAt
 }
 
-// INVITE TRACKER
-
-model InviteTrackerConfig {
-  id        String   @id @default(cuid())
-  guildId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model InviteTrackerInvite {
-  id         String   @id @default(cuid())
-  inviteCode String
-  guildId    String
-  channelId  String
-  userId     String
-  uses       Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-// EMBED UTILITY CONFIG
-
-model EmbedUtilityConfig {
-  id        String   @id @default(cuid())
-  guildId   String   @unique
-  enabled   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 // AI IMAGE GENERATION
 
 model AiImageGenerationConfig {
   id        String   @id @default(cuid())
   guildId   String   @unique
-  enabled   Boolean  @default(false)
+  enabled   Boolean  @default(true)
   // TODO: Implement custom AI Horde API key
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

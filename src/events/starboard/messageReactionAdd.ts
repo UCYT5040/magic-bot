@@ -1,5 +1,5 @@
 import {Events, MessageFlags, MessageReaction, TextChannel} from "discord.js";
-import {PrismaClient} from "../../../generated/prisma";
+import {PrismaClient} from "@prisma/client";
 import {embed} from "../../embed";
 
 const prisma = new PrismaClient();
@@ -62,7 +62,6 @@ module.exports = {
                             const starboardMessageEmbed = await createStarboardEmbed(reaction, starCount);
                             const newMessage = await (channel as TextChannel).send({
                                 embeds: [starboardMessageEmbed],
-                                flags: MessageFlags.SuppressEmbeds
                             });
 
                             await prisma.starboardMessage.create({

@@ -7,7 +7,7 @@ import {
     TextInputStyle
 } from "discord.js";
 import { embed } from "../../embed";
-import { PrismaClient } from "../../../generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
