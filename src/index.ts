@@ -9,10 +9,12 @@ interface ClientWithCommands extends Client {
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.MessageContent]
+        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildPresences]
 }) as ClientWithCommands;
 
 client.commands = new Collection();
+
+export const voiceIntervals: Map<string, NodeJS.Timeout> = new Map();
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
