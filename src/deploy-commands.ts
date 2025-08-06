@@ -11,6 +11,8 @@ const commands = [];
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
+const disabledCommands = process.env.DISABLED_COMMANDS ? process.env.DISABLED_COMMANDS.split(",").map(cmd => cmd.trim()) : [];
+
 for (const folder of commandFolders) {
     // Grab all the command files from the commands directory you created earlier
     const commandsPath = path.join(foldersPath, folder);
@@ -27,6 +29,10 @@ for (const folder of commandFolders) {
         
         }
         if ("data" in command && "execute" in command) {
+            if (disabledCommands.includes(command.data.name)) {
+                console.log(`[INFO] Command ${command.data.name} is disabled.`);
+                continue;
+            }
             commands.push(command.data.toJSON());
         } else {
             console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);

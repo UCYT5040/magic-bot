@@ -17,6 +17,8 @@ client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
+const disabledCommands = process.env.DISABLED_COMMANDS ? process.env.DISABLED_COMMANDS.split(",").map(cmd => cmd.trim()) : [];
+
 for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".ts"));
@@ -26,6 +28,10 @@ for (const folder of commandFolders) {
         const command = require(filePath);
         // Set a new item in the Collection with the key as the command name and the value as the exported module
         if ("data" in command && "execute" in command) {
+            if (disabledCommands.includes(command.data.name)) {
+                console.log(`[INFO] Command ${command.data.name} is disabled.`);
+                continue;
+            }
             client.commands.set(command.data.name, command);
         } else {
             console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
