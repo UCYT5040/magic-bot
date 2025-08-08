@@ -45,3 +45,6 @@ Commands are implemented as Discord slash commands.
 - `/slowmode` (mod) - Set slowmode for a channel.
 - Starboard w/ optional auto reactions
 - `/generate` - Generate AI images with various models.
+- `/combine` - AI command to combine two objects.
+- `/level` - View your level (or another user's)
+- `/set_xp` / `/interpol_xp` (admin) - Set XP requirements for levels
